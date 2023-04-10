@@ -1,0 +1,11 @@
+form{
+    width: 25vh;
+    max-width: 300px;
+    min-width: 200px;
+    margin: 0 auto;
+    padding-bottom: 2em;
+}
+#output_box{
+    width: 50vw;
+    display: flex;
+}
