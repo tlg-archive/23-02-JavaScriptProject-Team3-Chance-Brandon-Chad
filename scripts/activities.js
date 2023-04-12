@@ -22,6 +22,7 @@ export async function selectActivities(fetchWeather) {
       randomActivities.push(randomActivity);
     }
   }
+  return randomActivities;
 }
 
 export const activities = [

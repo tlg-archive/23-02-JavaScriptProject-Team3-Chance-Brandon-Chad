@@ -21,7 +21,7 @@ clickSearch.addEventListener("click", output);
 async function output(e) {
   e.preventDefault();
   const fetchWeatherData = await fetchWeather(e);
-  const selectActivities = await selectActivities(fetchWeatherData);
+  const randomActivities = await selectActivities(fetchWeatherData);
 
   //weather forecast output section
   const output_box_sections = document.createElement("div");
@@ -65,10 +65,11 @@ async function output(e) {
       behavior: "smooth",
     });
   });
-}
-nextButton.addEventListener("click", () => {
-  document.querySelector(".carousel").scrollBy({
-    left: 300,
-    behavior: "smooth",
+
+  nextButton.addEventListener("click", () => {
+    document.querySelector(".carousel").scrollBy({
+      eft: 300,
+      behavior: "smooth",
   });
 });
+}
