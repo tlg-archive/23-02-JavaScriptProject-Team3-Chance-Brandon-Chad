@@ -82,10 +82,11 @@ padding: 20px;
 display:flex;
 justify-content: center;
 }
+
 #user_input_form {
     display: flex;
     flex-direction: column;
-    gap:10px
+    gap: 3px;    
 }
 
 .footer_title{
