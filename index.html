@@ -18,40 +18,41 @@
       defer
       src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
     ></script>
-    <script async defer src="scripts/activities.js"></script>
-    <script type="module" async src="scripts/weather.js"></script>
+    <script type="module" async defer src="scripts/activities.js"></script>
+    <script type="module" async defer src="scripts/weather.js"></script>
     <script async defer src="scripts/calendar.js"></script>
-    <script type="module" async src src="scripts/scripts.js"></script>
+    <script type="module" async defer src="scripts/carousel.js"></script>
+    <script type="module" async src="scripts/scripts.js"></script>
   </head>
   <body>
-    <header><h1>Sunshine Sidekick</h1></header>
-    <section id="user_input">
-      <form action="" id="user_input_form">
-        <label for="location">Locations:</label><br />
-        <input
-          type="text"
-          id="location_name"
-          placeholder="Enter your location or zip-code"
-        /><br />
-        <label for="datepicker">Select a date:</label><br />
-        <input type="date" id="date_selection" /><br />
-        <input
-          type="submit"
-          name="submit"
-          id="submit_button"
-          value="Search"
-          class="btn btn-primary"
-        />
-      </form>
-    </section>
-    <section id="output_box"></section>
-
+    <header>
+      <img src="images/Logo.jpg" id="header_logo" alt="Logo" />
+      <h1 id="app_name">Sunshine Sidekick</h1>
+    </header>
+    <div id="middle_body" class="row">
+      <section id="user_input" class="col-4">
+        <form action="" id="user_input_form">
+          <label for="location">Locations:</label><br />
+          <input
+            type="text"
+            id="location_name"
+            placeholder="Enter your location or zip-code"
+          /><br />
+          <label for="datepicker">Select a date:</label><br />
+          <input type="date" id="date_selection" /><br />
+          <input
+            type="submit"
+            name="submit"
+            id="submit_button"
+            value="Search"
+            class="btn btn-primary"
+          />
+        </form>
+      </section>
+      <section id="output_box" class="col-6"></section>
+    </div>
     <footer>
-      <img
-        id="footer_logo"
-        src="https://www.canva.com/design/DAFfz4xqE5o/view"
-        alt="logo"
-      />
+      <img id="footer_logo" src="images/Logo.jpg" alt="logo" />
       <h2 id="footer_title">Golden Hour Enterprises</h2>
       <a id="footer_link" href="AboutUs.html">About Us</a>
     </footer>

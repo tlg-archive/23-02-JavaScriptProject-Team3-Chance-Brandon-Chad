@@ -1,14 +1,21 @@
 import { fetchWeather } from "scripts/weather.js";
 import { selectActivities } from "scripts/activities.js";
+import * as myCarousel from "scripts/carousel.js";
+import { generateSlideHTML, renderCarousel } from "./carousel";
+import { activities } from "./activities";
+// import { today, maxDate } from "./calendar";
 // import { handleDateSelection } from "scripts/calendar.js";
 
 // handleDateSelection();
 const fetchWeatherData = await fetchWeather();
 const clickSearch = document.getElementById("submit_button");
 clickSearch.addEventListener("click", output);
+const fetchCarousel = await generateSlideHTML(activities);
+const fetchRenderCarousel = await renderCarousel();
 
 async function output() {
   //const fetchWeatherData = await fetchWeather();
+    
   const output_box_sections = document.createElement("div");
   output_box_sections.innerHTML = `
     <section id="forecast">
@@ -21,7 +28,7 @@ async function output() {
     <div id ="chanceOfRain"><p>Chance of rain: ${fetchWeatherData.chanceOfRain}</p>
     </section>
 
-    <section id="suggested_box"><div class="carousel-container"> </div>
+    <section id="suggested_box"><div class="carousel-container"> ${fetchCarousel}${fetchRenderCarousel}</div>
     <button class="carousel-prev" type="button" data-bs-target=".carousel-container" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
@@ -48,6 +55,6 @@ async function output() {
 // const suggested_clicked = document.getElementById("suggested_box");
 // suggested_clicked.addEventListener("click", clickSearch);
 
-// const suggested_container = document.createElement("div");
-// // suggested_container.innerHTML = selectActivities();
-// output_box.appendChild(suggested_container);
+const suggested_container = document.createElement("div");
+suggested_container.innerHTML = selectActivities();
+output_box.appendChild(suggested_container);
