@@ -1,8 +1,8 @@
 import { fetchWeather } from "scripts/weather.js";
 
-export async function selectActivities(weatherData) {
+export async function selectActivities(fetchWeather) {
 
-const { temperature, chanceOfRain } = weatherData;
+const { temperature, chanceOfRain } = fetchWeather;
 
 const filteredActivities = activities.filter((activity) => {
     return (

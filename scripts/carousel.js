@@ -4,7 +4,7 @@ import { activities } from "./activities";
 // create a carousel card with subheading and description(link)
 // also needs to create arrow buttons to scroll between the suggested Activities
 
-function generateSlideHTML(activities) {
+export function generateSlideHTML(activities) {
   return `
       <div class="carousel-slide">
         <img src="${activities.image}" alt="${activities.name}">
@@ -12,7 +12,7 @@ function generateSlideHTML(activities) {
       </div>
     `;
 }
-function renderCarousel() {
+export function renderCarousel() {
   const container = document.querySelector(".carousel-container");
   let slidesHTML = "";
   carouselData.forEach((slide) => {
@@ -25,14 +25,14 @@ const container = document.querySelector(".carousel-container");
 const slides = container.querySelectorAll(".carousel-slide");
 let currentSlide = 0;
 
-function showSlide(slideIndex) {
+export function showSlide(slideIndex) {
   slides.forEach((slide) => {
     slide.style.display = "none";
   });
   slides[slideIndex].style.display = "block";
 }
 
-function nextSlide() {
+export function nextSlide() {
   currentSlide++;
   if (currentSlide >= slides.length) {
     currentSlide = 0;
@@ -40,7 +40,7 @@ function nextSlide() {
   showSlide(currentSlide);
 }
 
-function prevSlide() {
+export function prevSlide() {
   currentSlide--;
   if (currentSlide < 0) {
     currentSlide = slides.length - 1;
