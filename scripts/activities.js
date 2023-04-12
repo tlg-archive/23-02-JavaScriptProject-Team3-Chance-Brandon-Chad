@@ -11,7 +11,17 @@ export async function selectActivities(fetchWeather) {
       chanceOfRain <= activity.max_chance_rain
     );
   });
-  return filteredActivities;
+  // return filteredActivities;
+
+  const randomActivities = [];
+  const numActivitiesToSelect = Math.min(5, filteredActivities.length);
+  while (randomActivities.length < numActivitiesToSelect) {
+    const randomIndex = Math.floor(Math.random() * filteredActivities.length);
+    const randomActivity = filteredActivities[randomIndex];
+    if (!randomActivities.includes(randomActivity)) {
+      randomActivities.push(randomActivity);
+    }
+  }
 }
 
 export const activities = [

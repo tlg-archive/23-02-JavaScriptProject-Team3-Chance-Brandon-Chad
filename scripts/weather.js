@@ -4,8 +4,8 @@ form.addEventListener("submit", fetchWeather);
 export async function fetchWeather(e) {
   e.preventDefault();
 
-  const userCity = e.target.elements["location_name"].value;
-  const userDate = e.target.elements["date_selection"].value;
+  const userCity = document.getElementById("location_name").value;
+  const userDate = document.getElementById("date_selection").value;
 
   fetch(
     `http://api.weatherapi.com/v1/forecast.json?key=7582cffb759040ba973211757231104&q=${userCity}&days=7&aqi=no&alerts=no`
@@ -16,6 +16,7 @@ export async function fetchWeather(e) {
       const validForecast = data.forecast.forecastday.some(
         (day) => day.date === userDate
       );
+      console.log(data);
 
       if (!validForecast) {
         alert(`No forecast available for ${userDate} in ${userCity}.`);
@@ -44,6 +45,66 @@ export async function fetchWeather(e) {
       };
     });
 }
+// export async function fetchWeather(e) {
+//   e.preventDefault();
+
+//   const userCity = document.getElementById("location_name").value;
+//   const userDate = document.getElementById("date_selection").value;
+
+//   let result = {
+//     userCity,
+//     userDate,
+//     selectedForecast: null,
+//     temperature: null,
+//     description: null,
+//     iconUrl: null,
+//     windSpeed: null,
+//     chanceOfRain: null,
+//   };
+
+//   try {
+//     const res = await fetch(
+//       `http://api.weatherapi.com/v1/forecast.json?key=7582cffb759040ba973211757231104&q=${userCity}&days=7&aqi=no&alerts=no`
+//     );
+//     const data = await res.json();
+
+//     // Check if the selected date is within the forecast range
+//     const validForecast = data.forecast.forecastday.some(
+//       (day) => day.date === userDate
+//     );
+//     console.log(data);
+
+//     if (!validForecast) {
+//       alert(`No forecast available for ${userDate} in ${userCity}.`);
+//       return result;
+//     }
+
+//     // Filter the forecast data to get only the selected date's weather information
+//     const selectedForecast = data.forecast.forecastday.find(
+//       (day) => day.date === userDate
+//     ).day;
+//     const temperature = selectedForecast.avgtemp_f;
+//     const description = selectedForecast.condition.text;
+//     const iconUrl = `https://${selectedForecast.condition.icon.slice(2)}`;
+//     const windSpeed = selectedForecast.maxwind_mph;
+//     const chanceOfRain = selectedForecast.daily_chance_of_rain;
+
+//     result = {
+//       ...result,
+//       selectedForecast,
+//       temperature,
+//       description,
+//       iconUrl,
+//       windSpeed,
+//       chanceOfRain,
+//     };
+//   } catch (error) {
+//     console.error("Error fetching weather data:", error);
+//   }
+
+//   return result;
+// }
+
 //    const forecastSection = document.createElement("div");
 //    forecastSection.setAttribute("class", "weather-box");
 //    const rain = document.createElement("div");
