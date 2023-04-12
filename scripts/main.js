@@ -1,5 +1,5 @@
 import { fetchWeather } from "./weather.js";
-import { selectActivities } from "./activities.js";
+import { selectActivities as getActivities } from "./activities.js";
 import { activities } from "./activities.js";
 
 // Calender Function
@@ -21,7 +21,8 @@ clickSearch.addEventListener("click", output);
 async function output(e) {
   e.preventDefault();
   const fetchWeatherData = await fetchWeather(e);
-  const randomActivities = await selectActivities(fetchWeatherData);
+  console.log("Fetch Weather Data:", fetchWeatherData);
+  const randomActivities = await getActivities(fetchWeatherData);
 
   //weather forecast output section
   const output_box_sections = document.createElement("div");
