@@ -1,81 +1,151 @@
-// EventListener for form submission
-user_input_form.addEventListener("submit", fetchWeatherData);
+const form = document.getElementById("user_input_form");
+form.addEventListener("submit", fetchWeather);
 
-// function to fetch weather data based on user input(location and days)
-export async function fetchWeatherData(e) {
+export function fetchWeather(e) {
   e.preventDefault();
 
-  const userLocation = document.getElementById("location_name").value;
-  const userDay = document.getElementById("date_selection").value;
+  const userCity = e.target.elements["location_name"].value;
+  const userDate = e.target.elements["date_selection"].value;
 
-  const m3o = require("m3o").default(
-    process.env.M3O_ODYzYTdmY2EtYzBiMi00ZTRmLWIwZTUtNmZlZjRmZDFlMDJh
-  );
+  fetch(
+    `http://api.weatherapi.com/v1/forecast.json?key=7582cffb759040ba973211757231104&q=${userCity}&days=7&aqi=no&alerts=no`
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      // Check if the selected date is within the forecast range
+      const validForecast = data.forecast.forecastday.some(
+        (day) => day.date === userDate
+      );
 
-  let rsp = await m3o.weather.forecast({
-    days: userDay,
-    location: userLocation,
-  });
+      if (!validForecast) {
+        alert(`No forecast available for ${userDate} in ${userCity}.`);
+        return;
+      }
 
-  const forecastData = rsp.forecasts.find((item) => {
-    return item.location.name.toLowerCase() === userLocation.toLowerCase();
-  });
+      // Filter the forecast data to get only the selected date's weather information
+      const selectedForecast = data.forecast.forecastday.find(
+        (day) => day.date === userDate
+      ).day;
+      const temperature = selectedForecast.avgtemp_f;
+      const description = selectedForecast.condition.text;
+      const iconUrl = `https://${selectedForecast.condition.icon.slice(2)}`;
+      const windSpeed = selectedForecast.maxwind_mph;
+      const chanceOfRain = selectedForecast.daily_chance_of_rain;
 
-  user_input_form.reset();
+      //   return {
+      //     userCity,
+      //     userDate,
+      //     selectedForecast,
+      //     temperature,
+      //     description,
+      //     iconUrl,
+      //     windSpeed,
+      //     chanceOfRain,
+      //   };
+      // });
 
-  const temperature = forecastData.avg_temp_f;
-  const description = forecastData.condition;
-  const iconUrl = forecastData.icon_url;
-  const chanceOfRain = forecastData.chance_of_rain;
-  const windSpeed = forecastData.max_wind_mph;
-
-  const forecastSection = document.querySelector("#forecast");
-  forecastSection.innerHTML = `
-    <img src="${iconUrl}" alt="Weather icon">
-    <h2>Weather forecast for ${userLocation}:</h2>
-    <p>Temperature: ${temperature}°F</p>    
-    <p>Chance of rain: ${chanceOfRain}%</p>
-    <p>Description: ${description}</p>
-    <p>Max Wind Speed: ${windSpeed} mph</p>
-  `;
+      const forecastSection = document.createElement("div");
+      forecastSection.setAttribute("class", "weather-box");
+      const rain = document.createElement("div");
+      rain.setAttribute("class", "rain_chance");
+      rain.innerHTML = `Chance of rain for ${userCity} on ${userDate} is: ${chanceOfRain}%`;
+      forecastSection.appendChild(rain);
+      const icon = document.createElement("div");
+      icon.setAttribute("class", "weather-icon");
+      icon.innerHTML = `<img src="${iconUrl}" alt="weather icon">`;
+      forecastSection.appendChild(icon);
+      const weatherInfo = document.createElement("div");
+      weatherInfo.setAttribute("class", "weather-info");
+      const forecastLocation = document.createElement("h5");
+      forecastLocation.setAttribute("class", "weather-location");
+      forecastLocation.innerText = `Weather forecast for ${userCity} on ${userDate}`;
+      weatherInfo.appendChild(forecastLocation);
+      const temp = document.createElement("p");
+      temp.setAttribute("class", "weather-text");
+      temp.innerHTML = `Average Temperature: ${temperature}°F`;
+      weatherInfo.appendChild(temp);
+      const desc = document.createElement("p");
+      desc.setAttribute("class", "weather-text");
+      desc.innerHTML = `Description: ${description}`;
+      weatherInfo.appendChild(desc);
+      const wind = document.createElement("p");
+      wind.setAttribute("class", "weather-text");
+      wind.innerHTML = `Average Wind Speed: ${windSpeed.toFixed(2)} m/s`;
+      weatherInfo.appendChild(wind);
+      forecastSection.appendChild(weatherInfo);
+      document.getElementById("output_box").appendChild(forecastSection);
+      form.reset();
+    });
 }
 
-// Fetching Weather API
-//   const apiUrl = "https://api.m3o.com/v1/weather/Forecast";
-//   const apiKey = "ODYzYTdmY2EtYzBiMi00ZTRmLWIwZTUtNmZlZjRmZDFlMDJh";
+// const form = document.getElementById("user_input_form");
+// form.addEventListener("submit", fetchWeather);
 
-//   const response = await fetch(apiUrl, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${apiKey}`,
-//     },
-//     body: JSON.stringify({
-//       days: userDay,
-//       location: userLocation,
-//     }),
-//   });
+// async function fetchWeather(event) {
+//   event.preventDefault();
+//   const city_name = document.getElementById("location_name").value;
+//   const userDate = document.getElementById("date_selection").value;
 
+//   if (!userLocation) {
+//     alert("Please enter a location");
+//     return;
+//   }
+//   const apiKey = "31ac0ad803d5feb9501028264618874a";
+//   const apiUrl = `http://api.openweathermap.org/data/2.5/forecast/daily?q={city_name}&cnt=10&appid={31ac0ad803d5feb9501028264618874a}`;
+//   const response = await fetch(apiUrl);
 //   const data = await response.json();
 
-// Extracting the data for the user's location and day
-//   const forecastData = data.forecasts.find((item) => {
-//     return item.location.name.toLowerCase() === userLocation.toLowerCase();
+//   const forecast = data.list.find((item) => {
+//     const forecastDate = new Date(item.dt * 1000)
+//       .toISOString()
+//       .substring(0, 10);
+//     return forecastDate === userDate;
 //   });
 
-//   const temperature = forecastData.avg_temp_f;
-//   const description = forecastData.condition;
-//   const iconUrl = forecastData.icon_url;
-//   const chanceOfRain = forecastData.chance_of_rain;
-//   const windSpeed = forecastData.max_wind_mph;
+//   if (!forecast) {
+//     console.error("No forecast data found for selected date.");
+//     return;
+//   }
 
-//   const forecastSection = document.querySelector("#forecast");
-//   forecastSection.innerHTML = `
-//     <img src="${iconUrl}" alt="Weather icon">
-//     <h2>Weather forecast for ${userLocation}:</h2>
-//     <p>Temperature: ${temperature}°F</p>
-//     <p>Chance of rain: ${chanceOfRain}%</p>
-//     <p>Description: ${description}</p>
-//     <p>Max Wind Speed: ${windSpeed}</p>
-//   `;
-// }
+//   const temperature = forecast.temp.day;
+//   const description = forecast.weather[0].description;
+//   const iconCode = forecast.weather[0].icon;
+//   const iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
+//   const windSpeed = forecast.speed;
+
+//   const forecastSection = document.createElement("div");
+//   forecastSection.setAttribute("class", "weather-box");
+
+//   const icon = document.createElement("div");
+//   icon.setAttribute("class", "weather-icon");
+//   icon.innerHTML = `<img src="${iconUrl}" alt="weather icon">`;
+//   forecastSection.appendChild(icon);
+
+//   const weatherInfo = document.createElement("div");
+//   weatherInfo.setAttribute("class", "weather-info");
+
+//   const forecstLocation = document.createElement("h1");
+//   forecstLocation.setAttribute("class", "weather-location");
+//   forecstLocation.innerText = `Weather forecast for ${userLocation}`;
+//   weatherInfo.appendChild(forecstLocation);
+
+//   const temp = document.createElement("p");
+//   temp.setAttribute("class", "weather-text");
+//   temp.innerHTML = `Average Temperature: ${temperature}°F`;
+//   weatherInfo.appendChild(temp);
+
+//   const desc = document.createElement("p");
+//   desc.setAttribute("class", "weather-text");
+//   desc.innerHTML = `Description: ${description}`;
+//   weatherInfo.appendChild(desc);
+
+//   const wind = document.createElement("p");
+//   wind.setAttribute("class", "weather-text");
+//   wind.innerHTML = `Average Wind Speed: ${windSpeed.toFixed(2)} m/s`;
+//   weatherInfo.appendChild(wind);
+
+//   forecastSection.appendChild(weatherInfo);
+
+//   document.getElementById("output_box").appendChild(forecastSection);
+
+//   form.reset();
