@@ -1,6 +1,3 @@
-const form = document.getElementById("user_input_form");
-form.addEventListener("submit", fetchWeather);
-
 export async function fetchWeather(e) {
   e.preventDefault();
 
