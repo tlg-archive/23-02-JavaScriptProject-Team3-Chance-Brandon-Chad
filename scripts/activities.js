@@ -11,7 +11,6 @@ export async function selectActivities(fetchWeather) {
       chanceOfRain <= activity.max_chance_rain
     );
   });
-  
 
   const randomActivities = [];
   const numActivitiesToSelect = Math.min(5, filteredActivities.length);

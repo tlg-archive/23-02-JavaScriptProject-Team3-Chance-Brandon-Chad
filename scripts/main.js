@@ -34,13 +34,18 @@ async function output(e) {
     <div id ="description"><p>Description: ${fetchWeatherData.description}</p></div>
     <div id ="windSpeed"><p>Wind Speed: ${fetchWeatherData.windSpeed}</p></div>
     <div id ="chanceOfRain"><p>Chance of rain: ${fetchWeatherData.chanceOfRain}</p></div>
-    </section>`
-    const output_box_carousel = document.createElement("div");
-    output_box_carousel.innerHTML =
-   `<div class="carousel">
+    </section>`;
+  const output_box_carousel = document.createElement("div");
+  output_box_carousel.innerHTML = `<div class="carousel">
     <div class="carousel-container" id ="carousel_container"></div>
-    <button class="prev-button">Prev</button>
-    <button class="next-button">Next</button>
+    <button class="prev-button" type="button">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="next-button" type="button">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
   </div>`;
   output_box.appendChild(output_box_sections);
   output_box.appendChild(output_box_carousel);
@@ -72,6 +77,6 @@ async function output(e) {
     document.querySelector(".carousel").scrollBy({
       eft: 300,
       behavior: "smooth",
+    });
   });
-});
 }

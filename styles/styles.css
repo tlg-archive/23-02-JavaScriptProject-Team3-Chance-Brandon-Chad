@@ -11,11 +11,11 @@ header{
     padding:15px;
     background-color: #FAA94A;
     color: white;
-    height: 15vh;
+    height: 18vh;
     width: 100%;
     display: flex; 
     align-items: center; 
-    justify-content: space-between;
+    justify-content: center;
     
 }
 #middle_body{
@@ -26,8 +26,7 @@ header{
     display: flex;
     justify-content: start;
     position: relative;
-    width: 14%;
-    margin-left: 10%;
+    
 }
 
 form{
@@ -111,12 +110,13 @@ footer {
   background-color: #FAA94A;  
   display: flex; 
   align-items: center; 
-  justify-content: space-between;
+  justify-content: right;
   color: white;
+  padding-right: 10%;
 }
 #footer_logo {
     padding: 2px;
-    height: 10vh;
+    height: 12vh;
  margin-left: 10%;
 
     
