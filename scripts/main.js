@@ -29,20 +29,21 @@ async function output(e) {
   output_box_sections.innerHTML = `
     <section id="forecast">
     <h2> ${fetchWeatherData.userCity} on ${fetchWeatherData.userDate} </h2>
-    <div id ="selected_forecast"><p>${fetchWeatherData.selectedForecast}</p></div>
+    <img id ="icon" src=${fetchWeatherData.iconUrl}>
     <div id ="temperature"><p>Temperature: ${fetchWeatherData.temperature}</p></div>
     <div id ="description"><p>Description: ${fetchWeatherData.description}</p></div>
-    <img id ="icon" src=${fetchWeatherData.iconUrl}>
     <div id ="windSpeed"><p>Wind Speed: ${fetchWeatherData.windSpeed}</p></div>
     <div id ="chanceOfRain"><p>Chance of rain: ${fetchWeatherData.chanceOfRain}</p></div>
-    </section>
-
-    <section id="suggested_box"><div class="carousel">
-    <div class="carousel-container"></div>
+    </section>`
+    const output_box_carousel = document.createElement("div");
+    output_box_carousel.innerHTML =
+   `<div class="carousel">
+    <div class="carousel-container" id ="carousel_container"></div>
     <button class="prev-button">Prev</button>
     <button class="next-button">Next</button>
-  </div></div>`;
+  </div>`;
   output_box.appendChild(output_box_sections);
+  output_box.appendChild(output_box_carousel);
 
   //carousel items of random-filtered activities
   randomActivities.forEach((activity) => {
@@ -52,9 +53,9 @@ async function output(e) {
     <img src="${activity.image}" alt="${activity.name}">
     <h3>${activity.name}</h3>
   `;
-    carouselContainer.appendChild(activityElement);
+    carousel_container.appendChild(activityElement);
   });
-
+  console.log(randomActivities);
   user_input_form.reset();
 
   const prevButton = document.querySelector(".prev-button");

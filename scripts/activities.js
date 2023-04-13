@@ -11,7 +11,7 @@ export async function selectActivities(fetchWeather) {
       chanceOfRain <= activity.max_chance_rain
     );
   });
-  // return filteredActivities;
+  
 
   const randomActivities = [];
   const numActivitiesToSelect = Math.min(5, filteredActivities.length);
@@ -22,9 +22,9 @@ export async function selectActivities(fetchWeather) {
       randomActivities.push(randomActivity);
     }
   }
+
   return randomActivities;
 }
-
 export const activities = [
   // indoor activities
   {
