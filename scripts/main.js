@@ -25,58 +25,50 @@ async function output(e) {
   const randomActivities = await getActivities(fetchWeatherData);
 
   //weather forecast output section
-  const output_box_sections = document.createElement("div");
-  output_box_sections.innerHTML = `
+  const output_box_forecast = document.createElement("div");
+  output_box_forecast.innerHTML = `
     <section id="forecast">
-    <h2> ${fetchWeatherData.userCity} on ${fetchWeatherData.userDate} </h2>
-    <img id ="icon" src=${fetchWeatherData.iconUrl}>
-    <div id ="temperature"><p>Temperature: ${fetchWeatherData.temperature}</p></div>
-    <div id ="description"><p>Description: ${fetchWeatherData.description}</p></div>
-    <div id ="windSpeed"><p>Wind Speed: ${fetchWeatherData.windSpeed}</p></div>
-    <div id ="chanceOfRain"><p>Chance of rain: ${fetchWeatherData.chanceOfRain}</p></div>
+      <h2> ${fetchWeatherData.userCity} on ${fetchWeatherData.userDate} </h2>
+      <img id ="icon" src=${fetchWeatherData.iconUrl}>
+      <div id ="temperature"><p>Temperature: ${fetchWeatherData.temperature}</p></div>
+      <div id ="description"><p>Description: ${fetchWeatherData.description}</p></div>
+      <div id ="windSpeed"><p>Wind Speed: ${fetchWeatherData.windSpeed}</p></div>
+      <div id ="chanceOfRain"><p>Chance of rain: ${fetchWeatherData.chanceOfRain}</p></div>
     </section>`;
-  const output_box_carousel = document.createElement("div");
-  output_box_carousel.innerHTML = `<div class="carousel">
-    <div class="carousel-container" id ="carousel_container"></div>
-    <button class="prev-button" type="button">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="next-button" type="button">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-  </div>`;
-  output_box.appendChild(output_box_sections);
-  output_box.appendChild(output_box_carousel);
+
+  // const output_box_carousel = document.createElement("div");
+  // output_box_carousel.setAttribute("id", "carouselExampleIndicators");
+  // output_box_carousel.setAttribute("class", "carousel slide");
+  // output_box_carousel.innerHTML = `
+  // <div id="carousel_inner" class="carousel-inner"></div>
+
+  //   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+  //     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+  //     <span class="visually-hidden">Previous</span>
+  //   </button>
+  //   <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+  //     <span class="carousel-control-next-icon" aria-hidden="true"></span>
+  //     <span class="visually-hidden">Next</span>
+  //   </button>
+  // </div>`;
+  output_box.appendChild(output_box_forecast);
+  // output_box.appendChild(output_box_carousel);
 
   //carousel items of random-filtered activities
-  randomActivities.forEach((activity) => {
+  randomActivities.forEach((activity, currentIdx) => {
     const activityElement = document.createElement("div");
-    activityElement.className = "carousel-item";
+    if (currentIdx === 0) {
+      activityElement.className = "carousel-item active";
+    } else {
+      activityElement.className = "carousel-item";
+    }
     activityElement.innerHTML = `
-    <img src="${activity.image}" alt="${activity.name}">
-    <h3>${activity.name}</h3>
-  `;
-    carousel_container.appendChild(activityElement);
+      <img src="${activity.image}" class= "d-block w-100" alt="${activity.name}">
+      <div class= "carousel-caption d-none d-md-block">
+      <h5>${activity.name}</h5>
+      `;
+    carousel_inner.appendChild(activityElement);
   });
   console.log(randomActivities);
   user_input_form.reset();
-
-  const prevButton = document.querySelector(".prev-button");
-  const nextButton = document.querySelector(".next-button");
-
-  prevButton.addEventListener("click", () => {
-    document.querySelector(".carousel").scrollBy({
-      left: -300,
-      behavior: "smooth",
-    });
-  });
-
-  nextButton.addEventListener("click", () => {
-    document.querySelector(".carousel").scrollBy({
-      eft: 300,
-      behavior: "smooth",
-    });
-  });
 }
