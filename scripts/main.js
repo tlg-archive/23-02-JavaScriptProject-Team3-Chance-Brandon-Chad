@@ -24,6 +24,7 @@ async function output(e) {
   console.log("Fetch Weather Data:", fetchWeatherData);
   const randomActivities = await getActivities(fetchWeatherData);
 
+  output_box.innerHTML = "";
   //weather forecast output section
   const output_box_forecast = document.createElement("div");
   output_box_forecast.innerHTML = `
@@ -53,6 +54,7 @@ async function output(e) {
         </div>`;
   output_box.appendChild(output_box_activities);
 
+  carousel_inner.innerHTML = "";
   //carousel items of random-filtered activities
   randomActivities.forEach((activity, currentIdx) => {
     const activityElement = document.createElement("div");
@@ -70,4 +72,5 @@ async function output(e) {
   });
   console.log(randomActivities);
   user_input_form.reset();
+  document.getElementById("output_box").rest();
 }

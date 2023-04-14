@@ -5,7 +5,7 @@ export async function fetchWeather(e) {
   const userDate = document.getElementById("date_selection").value;
 
   return fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=7582cffb759040ba973211757231104&q=${userCity}&days=7&aqi=no&alerts=no`
+    `https://api.weatherapi.com/v1/forecast.json?key=7582cffb759040ba973211757231104&q=${userCity}&days=7&aqi=no&alerts=no`
   )
     .then((res) => res.json())
     .then((data) => {
